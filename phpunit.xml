@@ -4,6 +4,7 @@
         <testsuite name='All'>
             <directory suffix="Test.php">tests/52-compat</directory>
             <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">tests/53-above</directory>
+            <directory suffix="Test.php" phpVersion="5.5.0" phpVersionOperator=">=">tests/55-above</directory>
         </testsuite>
     </testsuites>
     <filter>

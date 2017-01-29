@@ -1,7 +1,7 @@
 <?php
 
 
-class tad_DI52_PHPStormMetaGeneratingContainer extends \tad_DI52_Container {
+class tad_DI52_Extensions_PHPStormMetaGeneratingContainer extends \tad_DI52_Container {
 
 	/**
 	 * @var array
@@ -31,37 +31,7 @@ class tad_DI52_PHPStormMetaGeneratingContainer extends \tad_DI52_Container {
 	}
 
 	function __destruct() {
-		$destination = $this->destinatonFolder . '/.phpstorm.meta.php';
-
-		$template = <<<PHP
-<?php
-namespace PHPSTORM_META {
-
-	override( \\tad_DI52_Container::make(0),
-	  map( [ //map of argument value -> return type
-			{{bindings}}
-		])
-	);
-
-	// support ArrayAccess ['key'] like calls
-	override(new \\tad_DI52_Container,
-		map([ //map of argument value -> return type
-			{{bindings}}
-		])
-	);
-}
-
-PHP;
-
-		$bindings = array();
-
-		foreach ( $this->made as $key => $implementation ) {
-			$bindings[] = "{$key} => {$implementation}";
-		}
-
-		$contents = str_replace( '{{bindings}}', implode( ",\n\t\t\t", $bindings ), $template );
-
-		file_put_contents( $destination, $contents );
+		$this->printPhpStormMeta();
 	}
 
 	public function offsetGet( $offset ) {
@@ -97,5 +67,43 @@ PHP;
 		$implementationClass = '\\' . ltrim( $implementationClass, '\\' );
 
 		$this->made[ $classOrInterfaceClass ] = $implementationClass;
+	}
+
+	public function printPhpStormMeta() {
+		$destination = $this->destinatonFolder . '/.phpstorm.meta.php';
+
+		$template = <<<PHP
+<?php
+
+namespace PHPSTORM_META {
+	
+	// for testing purposes
+	function tad_DI52_Container_Map() {
+		return array(
+			{{bindings}}
+		);
+	}
+
+	if ( function_exists( '\PHPSTORM_META\override' ) ) {
+		override(\\tad_DI52_Container::make(0), map([
+			{{bindings}}
+		]));
+		// support ArrayAccess ['key'] like calls
+		override(new \\tad_DI52_Container, map([
+			{{bindings}}
+		]));
+	}
+}
+PHP;
+
+		$bindings = array();
+
+		foreach ( $this->made as $key => $implementation ) {
+			$bindings[] = "{$key}::class => {$implementation}::class";
+		}
+
+		$contents = str_replace( '{{bindings}}', implode( ",\n\t\t\t", $bindings ), $template );
+
+		file_put_contents( $destination, $contents );
 	}
 }

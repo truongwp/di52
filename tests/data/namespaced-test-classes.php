@@ -17,6 +17,10 @@ class ClassOne implements One
 
 }
 
+class ExtendingClassOneOne extends ClassOne
+{
+}
+
 class ClassOneOne implements One
 {
 	public function __construct()
@@ -163,3 +167,104 @@ class ClassTwelve
 	}
 }
 
+class Three
+{
+}
+
+interface Four
+{
+
+}
+
+class FourBase implements Four
+{
+	public function __construct()
+	{
+
+	}
+
+	public function methodOne()
+	{
+		global $one;
+		$one = __CLASS__;
+	}
+
+	public function methodTwo()
+	{
+		global $two;
+		$two = __CLASS__;
+	}
+
+	public function methodThree($n)
+	{
+		return $n + 23;
+	}
+}
+
+class FourTwo implements Four
+{
+
+}
+
+class FourDecoratorOne implements Four
+{
+	public function __construct(Four $decorated)
+	{
+
+	}
+
+	public function methodOne($n)
+	{
+		return $n + 23;
+	}
+}
+
+class FourDecoratorTwo implements Four
+{
+	public function __construct(Four $decorated)
+	{
+
+	}
+}
+
+class FourDecoratorThree implements Four
+{
+	public function __construct(Four $decorated)
+	{
+
+	}
+}
+interface Five
+{
+
+}
+class FiveBase implements Five
+{
+	public function __construct($foo = 10)
+	{
+	}
+}
+
+class FiveDecoratorOne implements Five
+{
+	public function __construct(Five $five, Four $four)
+	{
+
+	}
+}
+
+class FiveDecoratorTwo implements Five
+{
+	public function __construct(Five $five, One $one)
+	{
+
+	}
+}
+
+class FiveDecoratorThree implements Five
+{
+	public function __construct(Five $five, Two $two)
+	{
+
+	}
+}

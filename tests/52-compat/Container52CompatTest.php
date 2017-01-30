@@ -1284,4 +1284,32 @@ class Container52CompatTest extends PHPUnit_Framework_TestCase
 
 		$this->assertInstanceOf('ClassOne', $secondInstance->getOne());
 	}
+
+	/**
+	 * @test
+	 * it should throw if trying to bind chain of decorators to string slug
+	 */
+	public function it_should_throw_if_trying_to_bind_chain_of_decorators_to_string_slug()
+	{
+		$sut = new tad_DI52_Container();
+
+		$this->setExpectedException('RuntimeException');
+
+		$sut->bindDecorators('four.foo',
+			array('FourDecoratorOne', 'FourDecoratorTwo', 'FourDecoratorThree', 'FourBase'));
+	}
+
+	/**
+	 * @test
+	 * it should allow binding a chaing of decorators to string slug using instance method
+	 */
+	public function it_should_allow_binding_a_chaing_of_decorators_to_string_slug_using_instance_method()
+	{
+		$sut = new tad_DI52_Container();
+
+		$sut->bindDecorators('Four', array('FourDecoratorOne', 'FourDecoratorTwo', 'FourDecoratorThree', 'FourBase'));
+		$sut->bind('foo.bar', $sut->instance('Four'));
+
+		$this->assertInstanceOf('Four', $sut->make('foo.bar'));
+	}
 }

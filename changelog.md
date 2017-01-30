@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+- added the `tad_DI52_Extensions_PHPStormMetaGeneratingContainer` class to decorate the basic container
+- put in place exception to cover binding of decoratos to string slug
 
 ## [2.0.1] - 2017-01-23
 ### Fixed

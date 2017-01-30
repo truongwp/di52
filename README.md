@@ -493,6 +493,21 @@ $container->bindDecorators('EndpointInterface', array('LoggingEndpoint', 'Cachin
 $postEndpoint = $container->make('EndpointInterface');
 ```
 
+**Note**: decorator chains can only be bound to interfaces or classes and not to string slugs. If you need to bind a chain of decorators to a string slug use the `instance` method:
+
+```php
+$container = new tad_DI52_Container();
+
+$container->bind('CacheInterface', 'ArrayCache');
+$container->bind('LoggerInterface', 'FileLogger');
+
+// decorate right to left, last is built first!
+$container->bindDecorators('EndpointInterface', array('LoggingEndpoint', 'CachingEndpoint', 'BaseEndpoint'));
+$container->bind('foo', $container->instance('EndpointInterface'));
+
+$postEndpoint = $container->make('EndpointInterface');
+```
+
 ## Tagging
 Tagging allows grouping similar implementations for the purpose of referencing them by group.  
 Grouping implementations makes sense when, as an example, the same method has to be called on each implementation:
@@ -667,3 +682,6 @@ $legacyOne = $container->make('LegacyClassOne');
 // will not be called again here, done already
 $legacyTwo = $container->make('LegacyInterfaceTwo');
 ```
+
+## Container Decorations
+

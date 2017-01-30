@@ -1,6 +1,7 @@
 <?php
 
-class tad_DI52_Container implements ArrayAccess {
+class tad_DI52_Container implements ArrayAccess, tad_DI52_ContainerInterface
+{
 
 	/**
 	 * @var boolean
@@ -589,6 +590,9 @@ class tad_DI52_Container implements ArrayAccess {
 	 */
 	public function bindDecorators($classOrInterface, array $decorators, array $afterBuildMethods = null)
 	{
+		if (!(interface_exists($classOrInterface) || class_exists($classOrInterface))) {
+			throw new RuntimeException("'{$classOrInterface}' is not an existing class or interface; decorator chains can be bound only to interfaces or classes.");
+		}
 		$this->bindings[$classOrInterface] = $classOrInterface;
 		$this->strings[$classOrInterface] = $decorators;
 		$this->chains[$classOrInterface] = $decorators;

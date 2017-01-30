@@ -30,15 +30,6 @@ interface tad_DI52_ContainerInterface
     public function bind($classOrInterface, $implementation, array $afterBuildMethods = null);
 
     /**
-     * Binds an interface or class to an implementation replacing an existing implementation.
-     *
-     * @param string $classOrInterface
-     * @param string $implementation
-     * @param array $afterBuildMethods
-     */
-    public function replaceBind($classOrInterface, $implementation, array $afterBuildMethods = null);
-
-    /**
      * Returns an instance of the class or object bound to an interface.
      *
      * @param string $classOrInterface A fully qualified class or interface name.
@@ -54,16 +45,6 @@ interface tad_DI52_ContainerInterface
      * @param array $afterBuildMethods
      */
     public function singleton($classOrInterface, $implementation, array $afterBuildMethods = null);
-
-    /**
-     * Binds an interface or class to an implementation and will always return the same instance replacing an
-     * existing singleton binding.
-     *
-     * @param string $classOrInterface
-     * @param string $implementation
-     * @param array $afterBuildMethods
-     */
-    public function replaceSingleton($classOrInterface, $implementation, array $afterBuildMethods = null);
 
     /**
      * Tags an array of implementation bindings.

@@ -1,7 +1,6 @@
 <?php
 
-class tad_DI52_Container implements ArrayAccess
-{
+class tad_DI52_Container implements ArrayAccess {
 
 	/**
 	 * @var boolean

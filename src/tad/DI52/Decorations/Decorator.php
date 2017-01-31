@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class tad_DI52_Decorations_Decorator
+ *
+ * The base class for container decorators: override relevant methods.
+ *
+ * @see tad_DI52_Decorations_PHPStormMetaGeneratingContainer as an example.
+ */
 abstract class tad_DI52_Decorations_Decorator implements tad_DI52_ContainerInterface {
 
 	/**
@@ -15,6 +22,12 @@ abstract class tad_DI52_Decorations_Decorator implements tad_DI52_ContainerInter
 		$this->container = $container;
 	}
 
+	/**
+	 * Returns an instance of the class or object bound to an interface.
+	 *
+	 * @param string $classOrInterface A fully qualified class or interface name.
+	 * @return mixed
+	 */
 	public function make($classOrInterface) {
 		return $this->container->make($classOrInterface);
 	}
